@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WEB Angular App</title>
+    <link rel="stylesheet" href="assets/style/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/style/awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="assets/style/webfont.css" />
+    <link rel="stylesheet" href="assets/plugin/datatable/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="assets/plugin/datatable/css/angular-datatables.min.css" />
+    <style>
+        * {
+            transition: 1.5s background;
+        }
+        body {
+            
+        }
+        .head {
+            
+            color: #FFF;
+            background: url('assets/image/background.jpg') center bottom no-repeat fixed;
+            background-size: cover;
+            height: 300px;
+        }
+        #header-title > h1 {
+            margin-top: 100px;
+            font-family: Oswald;
+        }
+        #nav {
+            z-index: 9999;
+        }
+        .navbar {
+            border: none;
+            border-radius: 0px;
+        }
+        .navbar-list{
+            height: inherit;
+            font-size: inherit;
+            padding: 15px;
+        }
+        .navbar-list:hover{
+            background: #CCC;
+        }
+        .navbar-list > a{
+            text-decoration: none;
+        }
+        .navbar-list:before{
+            content: " ";
+        }
+        #navigasi{
+            background: #f8f8f8;
+        }
+        #section{
+            min-height: 140px;
+        }
+        #footer{
+            margin-top: 20px;
+            height: 32px;
+            background: #f8f8f8;
+        }
+        .asa{
+            background: #eee url('assets/image/angularLogo.png') no-repeat center center;
+            background-size: contain;
+            height: 150px;
+        }
+    </style>
+</head>
+<body ng-app="FirstApp">
+
+    <div class="container-fluid">
+    
+        <header id="header" class="row head">
+            <div class="col-md-12">
+                <span id="header-title" class="text-center"><h1>ANGULAR APP</h1></span>
+            </div>
+        </header>
+        
+        <nav id="nav" class="row navbar navbar-default">
+            <div class="container" style="height: 50px;">
+                <div class="navbar-header visible-xs">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigasi" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">HOME</a>
+                </div>
+                <div id="navigasi" class="navbar-collapse collapse" ng-controller="MainController" >
+                    <div ng-repeat="nav in navs" ng-show="nav.logged"  class="col-sm-4 text-center navbar-list {{nav.clas}}"><a href="{{nav.href}}"><i class="{{nav.icon}}"></i> {{nav.title}}</a></div>
+                </div>
+                    
+            </div>
+        </nav>
+        
+        <section id="section" class="row">
+            <div class="container">
+                <div ng-view>
+                    
+                </div>
+            </div>
+        </section>
+        
+        <footer id="footer" class="row">
+            <div class="col-md-12 text-center">
+                <span>Tugas Membuat Website Menggunakan AngularJS</span>
+            </div>
+        </footer>
+        
+        
+    
+    </div>
+    
+    <script src="assets/javascript/jquery.min.js"></script>
+    <script src="assets/plugin/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="assets/javascript/angular.min.js" ></script>
+    <script src="assets/plugin/datatable/js/angular-datatables.min.js"></script>
+    <script src="assets/javascript/angular-route.min.js" ></script>
+    <script src="assets/javascript/bootstrap.min.js"></script>
+    <script src="js/app.js" ></script>
+    <script src="js/route.js" ></script>
+    <script src="js/controller/MainController.js" ></script>
+    <script src="js/controller/HomeController.js" ></script>
+    <script src="js/controller/AboutController.js" ></script>
+    <script src="js/controller/UserController.js" ></script>
+</body>
+</html>

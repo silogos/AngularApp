@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html ng-app="FirstApp">
+<head>
+    <title ng-controller="MainController">{{title}}</title>
+    <link  href="assets/style/bootstrap.min.css" />
+</head>
+
+<body>
+    
+    <div>
+        <div ng-controller="MainController">
+            <input ng-keyup="logToConsole($index)" ng-model="title"/>
+            <div style="border: 1px solid; padding: 10px;" ng-repeat="lele in leles">
+                {{lele.nama}} <br />
+                {{lele.berat}} <br />
+                Rp. {{lele.harga}}/ekor<br />
+                {{lele.stok}} Ekor<br />
+                <button ng-click="beli($index)">Beli</button>
+                <button ng-click="logToConsole($index)">Log</button>
+            </div>
+        
+        </div>
+    </div>
+
+<script src="assets/javascript/angular.min.js" ></script>
+<script src="js/app.js" ></script>
+<script src="js/controller/MainController.js" ></script>
+</body>
+</html>

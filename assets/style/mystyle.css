@@ -1,0 +1,19 @@
+
+body {
+    background: url('../../img/background.jpg') fixed no-repeat center center;
+    background-size: cover;
+}
+#box {
+    background: #FFF url(../../img/line.png) repeat-x bottom center;
+    margin: 50px 0;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px 1px #CCC;
+    padding-bottom: 30px;
+}
+#content {
+    padding: 10px;
+}
+
+.progress-bar {
+    background: #FFF url(../../img/line.png) repeat;
+}

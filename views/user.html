@@ -1,0 +1,14 @@
+<div ng-controller="UserController as showCase">
+    <p>
+        <button ng-click="showCase.reloadData()" type="button" class="btn btn-info"><i class="fa fa-refresh"></i> Reload Data</button>
+    </p>
+    
+    <div ng-show="showCase.message" class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{showCase.message}}
+    </div>
+    <div class="table-responsive" style="border: 0;">
+        <table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" dt-instance="showCase.dtInstance" class="row-border hover"></table>
+    </div>
+</div>
