@@ -1,16 +1,51 @@
 <div ng-controller="BookmarkController as showCase">
     <p>
+        <button ng-click="showCase.tambah()" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data</button>
         <button ng-click="showCase.reloadData()" type="button" class="btn btn-info"><i class="fa fa-refresh"></i> Reload Data</button>
     </p>
     
-    <div ng-show="showCase.message" class="alert alert-danger" role="alert">
-      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <!-- Message -->
+    <div ng-show="showCase.messageDel" class="alert alert-danger" role="alert">
+      <button ng-click="showCase.reloadData('reset')" class="close"><i class="fa fa-remove"></i></button>
+      <span ng-show="showCase.messageDelStat" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span ng-hide="showCase.messageDelStat" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
       <span class="sr-only">Error:</span>
-      {{showCase.message}}
+      {{showCase.messageDel}}
     </div>
+    
     <div class="table-responsive" style="border: 0;">
         <table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" dt-instance="showCase.dtInstance" class="row-border hover"></table>
     </div>
+    <!-- Modal View Bookmark -->
+    <div class="modal fade" id="view_bookmark">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-remove"></i></span></button>
+                <h4 class="modal-title">DETAIL BOOKMARK</h4>
+                </div>
+                <form id="form-detail-bookmark">
+                <div class="modal-body">
+                
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="title" required="" id="title" placeholder="Title" readonly="" ng-model="data.title"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="url" name="url" required="" id="url" placeholder="Url" readonly="" ng-model="data.url"/>
+                    </div>
+                    <div class="form-group">
+                        <textarea style="resize: vertical;" class="form-control" name="description" required="" id="description" placeholder="Description" readonly="" ng-model="data.description"></textarea>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Tambah Bookmark -->
     <div class="modal fade" id="tambah_bookmark">
         <div class="modal-dialog modal-md">
@@ -19,17 +54,17 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-remove"></i></span></button>
                 <h4 class="modal-title">TAMBAH BOOKMARK</h4>
                 </div>
-                <form id="form-tambah-bookmark">
+                <form id="form-tambah-bookmark" onsubmit="return false">
                 <div class="modal-body">
                 
                     <div class="form-group">
-                        <input class="form-control" type="text" name="title" required="" id="title" placeholder="Title"/>
+                        <input class="form-control" type="text" name="title" required="" id="title" placeholder="Title" ng-model="data.title"/>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="url" name="url" required="" id="url" placeholder="Url"/>
+                        <input class="form-control" type="url" name="url" required="" id="url" placeholder="Url" ng-model="data.url"/>
                     </div>
                     <div class="form-group">
-                        <textarea style="resize: vertical;" class="form-control" name="description" required="" id="description" placeholder="Description"></textarea>
+                        <textarea style="resize: vertical;" class="form-control" name="description" required="" id="description" placeholder="Description" ng-model="data.description"></textarea>
                     </div>
                     <div class="progress" style="display: none;">
                       <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
@@ -37,9 +72,16 @@
                       </div>
                     </div>
                     
+                    <div ng-show="showCase.messageAdd" class="alert alert-success" role="alert">
+                        <span ng-show="showCase.messageAddStat" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span ng-hide="showCase.messageAddStat" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{showCase.messageAdd}}
+                    </div>
+                    
                 </div>
                 <div class="modal-footer">
-                    <a id="submit" href="#tambah" onclick="tambah()" class="form-control btn btn-primary" >TAMBAH</a>
+                    <button ng-click="showCase.tambah_aksi()" class="form-control btn btn-primary" >TAMBAH</button>
                 </div>
                 </form>
             </div>
@@ -54,18 +96,18 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-remove"></i></span></button>
                 <h4 class="modal-title">EDIT BOOKMARK</h4>
                 </div>
-                <form id="form-edit-bookmark">
+                <form id="form-edit-bookmark" onsubmit="return false;">
                 <div class="modal-body">
                 
                     <div class="form-group">
-                        <input type="hidden" name="id" required="" id="id" readonly=""/>
-                        <input class="form-control" type="text" name="title" required="" id="title" placeholder="Title"/>
+                        <input type="hidden" name="id" required="" id="id" readonly="" ng-model="data.id"/>
+                        <input class="form-control" type="text" name="title" required="" id="title" placeholder="Title" ng-model="data.title"/>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" type="url" name="url" required="" id="url" placeholder="Url"/>
+                        <input class="form-control" type="url" name="url" required="" id="url" placeholder="Url" ng-model="data.url"/>
                     </div>
                     <div class="form-group">
-                        <textarea style="resize: vertical;" class="form-control" name="description" required="" id="description" placeholder="Description"></textarea>
+                        <textarea style="resize: vertical;" class="form-control" name="description" required="" id="description" placeholder="Description" ng-model="data.description"></textarea>
                     </div>
                     <div class="progress" style="display: none;">
                       <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
@@ -73,9 +115,18 @@
                       </div>
                     </div>
                     
+                    <div ng-show="showCase.messageEdit" class="alert alert-success" role="alert">
+                        
+                        <span ng-show="showCase.messageEditStat" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span ng-hide="showCase.messageEditStat"class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{showCase.messageEdit}}
+                    </div>
+                    
                 </div>
                 <div class="modal-footer">
-                    <a id="submit" href="#tambah" onclick="edit()" class="form-control btn btn-primary" >TAMBAH</a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" ng-click="showCase.edit_aksi()" class="btn btn-primary" >EDIT</button>
                 </div>
                 </form>
             </div>

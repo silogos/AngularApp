@@ -35,6 +35,7 @@ function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTCol
     }
     
     function tambah(){
+        $scope.data= {};
         $('#tambah_user').modal('show');
     }
     

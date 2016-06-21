@@ -4,8 +4,11 @@ function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTCol
     
     var vm = this;
     $scope.data={};
-    vm.message = '';
+    vm.tambah = tambah;
+    vm.tambah_aksi = tambah_aksi;
+    vm.view = view;
     vm.edit = edit;
+    vm.edit_aksi = edit_aksi;
     vm.delete = deleteRow;
     vm.dtInstance = {};
     vm.persons = {};
@@ -17,7 +20,7 @@ function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTCol
     vm.dtColumns = [
         DTColumnBuilder.newColumn('no').withTitle('NO'),
         DTColumnBuilder.newColumn('title').withTitle('TITLE'),
-        DTColumnBuilder.newColumn('url').withTitle('URL'),
+        DTColumnBuilder.newColumn(null).withTitle('URL').renderWith(actionshtmllink),
         DTColumnBuilder.newColumn(null).withTitle('AKSI').notSortable().renderWith(actionshtml)
     ];
     
@@ -30,10 +33,70 @@ function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTCol
         console.log(json);
     }
     
-    function edit(person){
-        vm.message = 'You are trying to edit : '+ JSON.stringify(person);
+    function tambah(){
+        $scope.data= {};
+        $('#tambah_bookmark').modal('show');
+    }
+    
+    function tambah_aksi(){
+        var data = JSON.stringify({title:$scope.data.title, url:$scope.data.url, description:$scope.data.description});
         
-        vm.dtInstance.reloadData();
+        $http.post("http://localhost/TugasCI-GIT/index.php/crudbookmark/tambah_aksi/ang",data)
+        .success(function(response){
+            reloadData();
+            vm.messageAdd = response.msg;
+            vm.messageAddStat = response.error;
+            $scope.data= {};
+        })
+        .error(function(){
+            vm.messageAdd = 'Gagal di tambahkan..!';
+            vm.messageAddStat = true;
+        })
+    }
+    
+    function view(person){
+        
+        $http.post("http://localhost/TugasCI-GIT/index.php/crudbookmark/edit/"+person.id)
+        .success(function(response){
+            $scope.data = response;
+        })
+        .error(function(){
+            vm.messageEdit = 'Gagal di tambahkan..!';
+            vm.messageEditStat = true;
+        })
+    
+        $('#view_bookmark').modal('show');
+        
+    }
+    
+    function edit(person){
+        
+        $http.post("http://localhost/TugasCI-GIT/index.php/crudbookmark/edit/"+person.id)
+        .success(function(response){
+            $scope.data = response;
+        })
+        .error(function(){
+            vm.messageEdit = 'Gagal di tambahkan..!';
+            vm.messageEditStat = true;
+        })
+    
+        $('#edit_bookmark').modal('show');
+        
+    }
+    
+    function edit_aksi(){
+        var data = JSON.stringify({id:$scope.data.id, title:$scope.data.title, url:$scope.data.url, description:$scope.data.description});
+        
+        $http.post("http://localhost/TugasCI-GIT/index.php/crudbookmark/edit_aksi/ang",data)
+        .success(function(response){
+            reloadData();
+            vm.messageEdit = response.msg;
+            vm.messageEditStat = response.error;
+        })
+        .error(function(){
+            vm.messageEdit = 'Gagal di tambahkan..!';
+            vm.messageEditStat = true;
+        })
     }
     
     function deleteRow(person){
@@ -42,10 +105,12 @@ function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTCol
             $http.delete('http://localhost/TugasCI-GIT/index.php/crudbookmark/delete/'+person.id)
             .success(function(response){
                 reloadData();
-                vm.message = response.msg;
+                vm.messageDel = response.msg;
+                vm.messageDelStat = response.error;
             })
             .error(function(){
-                vm.message = 'Gagal Terhapus';
+                vm.messageDel = 'Gagal Terhapus';
+                vm.messageDelStat = true;
             })
             
         }
@@ -58,11 +123,18 @@ function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTCol
     
     function actionshtml(data){  
         vm.persons[data.id] = data;
-        return '<button ng-click="showCase.edit(showCase.persons['+ data.id +'])" id='+ data.id +' class="btn btn-warning">' +
-                    '<i class="fa fa-edit"></i>' +
+        return '<button ng-click="showCase.view(showCase.persons['+ data.id +'])" id='+ data.id +' class="btn btn-primary">' +
+                    '<i class="fa fa-eye"></i>' +
+               '</button>&nbsp;<button ng-click="showCase.edit(showCase.persons['+ data.id +'])" id='+ data.id +' class="btn btn-warning">' +
+                    '<i class="fa fa-edit"></i>' + 
                '</button>&nbsp;<button ng-click="showCase.delete(showCase.persons['+ data.id +'])" id='+ data.id +' class="btn btn-danger">' +
                     '<i class="fa fa-trash"></i>' + 
                '</button>';            
+    }
+    
+    function actionshtmllink(data){  
+        vm.persons[data.id] = data;
+        return '<a href="'+ data.url +'">'+ data.url +'</a>';            
     }
     
 }
