@@ -41,7 +41,7 @@ app.controller('MainController',['$scope', function($scope){
         icon: "fa fa-sign-out",
         logged: true
     }
-    ]
+    ];
     $scope.title = "Macam macam Lele";
     $scope.leles = [
     {

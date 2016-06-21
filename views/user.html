@@ -1,14 +1,125 @@
 <div ng-controller="UserController as showCase">
     <p>
+        <button ng-click="showCase.tambah()" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data</button>
         <button ng-click="showCase.reloadData()" type="button" class="btn btn-info"><i class="fa fa-refresh"></i> Reload Data</button>
     </p>
-    
-    <div ng-show="showCase.message" class="alert alert-danger" role="alert">
+    <!-- Message -->
+    <div ng-show="showCase.messageDel" class="alert alert-danger" role="alert">
+      <button ng-click="showCase.reloadData('reset')" class="close"><i class="fa fa-remove"></i></button>
       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span ng-show="showCase.messageDelStat" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span ng-hide="showCase.messageDelStat" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       <span class="sr-only">Error:</span>
-      {{showCase.message}}
+      {{showCase.messageDel}}
     </div>
+    
     <div class="table-responsive" style="border: 0;">
         <table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" dt-instance="showCase.dtInstance" class="row-border hover"></table>
     </div>
+    
+    <!-- Modal Tambah User -->
+    <div class="modal fade" id="tambah_user">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-remove"></i></span></button>
+                <h4 class="modal-title">TAMBAH USER</h4>
+                </div>
+                <form id="form-tambah-user" onsubmit="return false;">
+                <div class="modal-body">
+                
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="username" required="" id="username" placeholder="Username" ng-model="data.username"/>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" name="password" required="" id="password" placeholder="Password" ng-model="data.password"/>
+                    </div>
+                    <div class="progress" style="display: none;">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
+                        
+                      </div>
+                    </div>
+                    <div ng-show="showCase.messageAdd" class="alert alert-success" role="alert">
+                        <span ng-show="showCase.messageAddStat" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span ng-hide="showCase.messageAddStat" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{showCase.messageAdd}}
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-click="showCase.tambah_aksi()" class="form-control btn btn-primary" >TAMBAH</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Edit User -->
+    <div class="modal fade" id="edit_user">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-remove"></i></span></button>
+                <h4 id="modtit" class="modal-title">USER</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="form-edit-user" onsubmit="return false;">
+                        <div class="form-group">
+                            <input type="hidden" name="id" id="id" required="" readonly="" ng-model="data.id"/>
+                            <input class="form-control" type="text" name="username" id="username" required="" id="username" placeholder="Username" readonly="" ng-model="data.username"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" name="pass_word" required="" id="password" placeholder="Password Lama" ng-model="data.pass_word"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" name="password" required="" id="password" placeholder="Password Sekarang" ng-model="data.password"/>
+                        </div>
+                        <div class="progress" style="display: none;">
+                          <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
+                            
+                          </div>
+                        </div>
+                    
+                    <div ng-show="showCase.messageEdit" class="alert alert-success" role="alert">
+                        
+                        <span ng-show="showCase.messageEditStat" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span ng-hide="showCase.messageEditStat"class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{showCase.messageEdit}}
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" ng-click="showCase.edit_aksi()" class="btn btn-primary" >EDIT</button>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <!-- modal delete user --!>
+    <div class="modal fade" id="hapus">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-remove"></i></span></button>
+                <h4 class="modal-title">HAPUS USER</h4>
+                </div>
+                <div class="modal-body">
+                
+                    Yakin ingin menghapus data ini..!
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a href="#delete" id='delete_user' class="btn btn-danger" ><i class="fa fa-trash"></i> Delete</a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+        
 </div>

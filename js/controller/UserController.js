@@ -3,8 +3,11 @@ app.controller('UserController', DataReloadWithAjaxCtrl);
 function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTColumnBuilder) {
     
     var vm = this;
-    vm.message = '';
+    $scope.data = {};
+    vm.tambah = tambah;
+    vm.tambah_aksi = tambah_aksi;
     vm.edit = edit;
+    vm.edit_aksi = edit_aksi;
     vm.delete = deleteRow;
     vm.dtInstance = {};
     vm.persons = {};
@@ -19,7 +22,10 @@ function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTCol
         DTColumnBuilder.newColumn(null).withTitle('AKSI').notSortable().renderWith(actionshtml)
     ];
     
-    function reloadData(){
+    function reloadData(reset){
+        if(reset){
+            vm.message = '';
+        }
         var resetPaging = false;
         vm.dtInstance.reloadData(callback, resetPaging);
     }
@@ -28,10 +34,51 @@ function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTCol
         console.log(json);
     }
     
-    function edit(person){
-        vm.message = 'You are trying to edit : '+ JSON.stringify(person);
+    function tambah(){
+        $('#tambah_user').modal('show');
+    }
+    
+    function tambah_aksi(){
         
-        vm.dtInstance.reloadData();
+        var data = JSON.stringify({username:$scope.data.username, password:$scope.data.password});
+        
+        $http.post("http://localhost/TugasCI-GIT/index.php/cruduser/tambah_aksi/ang",data)
+        .success(function(response){
+            reloadData();
+            vm.messageAdd = response.msg;
+            vm.messageAddStat = response.error;
+            console.log(response.error);
+            $scope.data= {};
+        })
+        .error(function(){
+            vm.messageAdd = 'Gagal di tambahkan..!';
+            vm.messageAddStat = true;
+        })
+        
+        console.log($scope.data);
+    }
+    
+    function edit(person){
+        $('#edit_user').modal('show');
+        $scope.data = person;
+    }
+    
+    function edit_aksi(){
+        
+        var data = JSON.stringify({id:$scope.data.id,username:$scope.data.username, pass_word:$scope.data.pass_word, password:$scope.data.password});
+        
+        $http.post("http://localhost/TugasCI-GIT/index.php/cruduser/edit_aksi/ang",data)
+        .success(function(response){
+            reloadData();
+            vm.messageEdit = response.msg;
+            vm.messageEditStat = response.error;
+            console.log(response.error);
+        })
+        .error(function(){
+            vm.messageEdit = 'Gagal di ubah..!';
+            vm.messageEditStat = true;
+        })
+        
     }
     
     function deleteRow(person){
@@ -39,13 +86,17 @@ function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTCol
         if(deleted){
             $http.delete('http://localhost/TugasCI-GIT/index.php/cruduser/delete/'+person.id)
             .success(function(response){
-                vm.message = response.msg;
+                reloadData();
+                vm.messageDel = response.msg;
+                vm.messageDelStat = response.error;
             })
             .error(function(){
-                vm.message = 'Gagal Terhapus';
+                vm.messageDel = 'Gagal Terhapus';
+                vm.messageDelStat = true;
             })
+            
         }
-        vm.dtInstance.reloadData();
+        
     }
     
     function createdRow(row, data, dataIndex){
