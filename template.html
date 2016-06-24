@@ -65,6 +65,21 @@
             background-size: contain;
             height: 150px;
         }
+        
+        #backtotop {
+            position: fixed;
+            right: 40px;
+            bottom: 0px;
+            background: #CCC;
+            padding: 5px;
+            height: 2.5em;
+            overflow: hidden; 
+            opacity: 0.7;
+        }
+        
+        #backtotop > i {
+            font-size: 3.5em;
+        }
     </style>
 </head>
 <body ng-app="FirstApp">
@@ -74,6 +89,7 @@
         <header id="header" class="row head">
             <div class="col-md-12">
                 <span id="header-title" class="text-center"><h1>ANGULAR APP</h1></span>
+                <span id="header-title" class="text-center"><h3 data-ng-bind="title">HOME</h3></span>
             </div>
         </header>
         
@@ -104,12 +120,22 @@
         </section>
         
         <footer id="footer" class="row">
-            <div class="col-md-12 text-center">
-                <span>Tugas Membuat Website Menggunakan AngularJS</span>
+            
+            <div class="col-md-6">
+            
             </div>
+            <div class="col-md-6">
+            
+            </div>
+            
         </footer>
     </div> 
-
+    
+    <div id="backtotop" style="display: none;">
+        <i class="fa fa-sort-asc fa-3"></i>
+    </div>
+    
+    
     <script src="assets/javascript/jquery.min.js"></script>
     <script src="assets/plugin/datatable/js/jquery.dataTables.min.js"></script>
     <script src="assets/javascript/angular.min.js" ></script>
@@ -123,5 +149,6 @@
     <script src="js/controller/AboutController.js" ></script>
     <script src="js/controller/UserController.js" ></script>
     <script src="js/controller/BookmarkController.js" ></script>
+    <script src="js/backToTop.js" ></script>
 </body>
 </html>

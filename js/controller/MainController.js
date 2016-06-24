@@ -1,4 +1,7 @@
-app.controller('MainController',['$scope', function($scope){
+app.controller('MainController', MainControl);
+
+function MainControl($scope){
+    
     $scope.navs = [
     {
         title: "ABOUT",
@@ -42,32 +45,5 @@ app.controller('MainController',['$scope', function($scope){
         logged: true
     }
     ];
-    $scope.title = "Macam macam Lele";
-    $scope.leles = [
-    {
-        nama: 'Lele Jumbo',
-        berat: '5 Kg',
-        harga: 5000,
-        stok: 100
-    },
-    {
-        nama: 'Lele Solokan',
-        berat: '1 Kg',
-        harga: 1500,
-        stok: 44
-    },
-    {
-        nama: 'Lele Balong',
-        berat: '3 Kg',
-        harga: 4000,
-        stok: 120
-    }
-    ];
-    $scope.beli=function(index){
-        $scope.leles[index].stok-=1;
-        
-    }
-    $scope.logToConsole=function(index){
-        console.log($scope.title);
-    }
-}]);
+    
+}

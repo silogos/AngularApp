@@ -134,7 +134,7 @@ function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTCol
     
     function actionshtmllink(data){  
         vm.persons[data.id] = data;
-        return '<a href="'+ data.url +'">'+ data.url +'</a>';            
+        return '<a target="_blank" href="'+ data.url +'">'+ data.url +'</a>';            
     }
     
 }
