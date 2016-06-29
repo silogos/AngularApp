@@ -10,6 +10,12 @@ app.config(['$routeProvider', function($routeProvider){
         templateUrl: 'views/about.html',
         controller: 'AboutController'
    })
+   .when('/login', {
+        title: 'LOGIN',
+        templateUrl: 'views/login.html',
+        controller: 'LoginController',
+        controllerAs: 'login'
+   })
    .when('/bookmark', {
         title: 'BOOKMARK',
         templateUrl: 'views/bookmark.html'

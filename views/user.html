@@ -6,7 +6,7 @@
         
     <!-- Message -->
     <div ng-show="showCase.messageDel" class="alert alert-danger" role="alert">
-      <button ng-click="showCase.reloadData('reset')" class="close"><i class="fa fa-remove"></i></button>
+      <button ng-click="showCase.messageDel=false" class="close"><i class="fa fa-remove"></i></button>
       <span ng-show="showCase.messageDelStat" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
       <span ng-hide="showCase.messageDelStat" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
       <span class="sr-only">Error:</span>

@@ -33,7 +33,7 @@ function MainControl($scope){
     },
     {
         title: "LOGIN",
-        href: "#/login",
+        href: "login.html",
         icon: "fa fa-sign-in",
         logged: false,
         clas: ""
