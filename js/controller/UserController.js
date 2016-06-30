@@ -1,7 +1,10 @@
 app.controller('UserController', DataReloadWithAjaxCtrl);
 
 function DataReloadWithAjaxCtrl($scope, $http, $compile, DTOptionsBuilder, DTColumnBuilder) {
-    
+    $http.get("http://localhost/TugasCI-GIT/index.php/login/cek_sesi")
+    .success(function(response){
+        (!response.status) ? window.location='http://localhost/AngularApp/login.html': "";
+    })
     var vm = this;
     $scope.data = {};
     vm.tambah = tambah;

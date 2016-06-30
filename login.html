@@ -10,13 +10,17 @@
     <link rel="stylesheet" href="assets/style/webfont.css" />
     <style>
         body {
-            
+            background: url(assets/image/IMG_20160630_103110.jpg);
+            background-size: cover;
         }
         #formLogin {
-            background: #f8f8f8;
+            background-color: #fff;
+            background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+            background-size: 100% 1.359em;
             margin-top: 100px; 
             padding: 10px;
-            padding-top: 70px;
+            padding-top: 50px;
+            height: 350px;
             box-shadow: 1px 1px 1px 1px #CCC;
         }
         .box:before,.box:after{
@@ -27,7 +31,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #f8f8f8;
+            background-color: #fff;
+            background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+            background-size: 100% 1.359em;
             -webkit-transform: rotate(4deg);
             box-shadow: 1px 1px 1px 1px #CCC;
         }
@@ -36,17 +42,17 @@
         }
         
         #formLogin > .title {
-            background: #428bca;
+            background: #FFF;
             position: absolute;
             width: 100%;
-            top: 15px;
+            top: 0px;
             left: 0px;
-            padding: 3px;
+            padding: 5px;
             text-align: center;
         }
         #formLogin > .title > h3 {
             margin: 0;
-            color: #FFFFFF;
+            color: #000;
             font-family: Oswald;
         }
         .container {
@@ -72,30 +78,33 @@
 
     <div ng-controller="LoginController as formLogin" class="container">
         <div id="formLogin" class="col-md-12 box">
-            <div class="title bg-primary">
-                <h3>LOGIN</h3>
-            </div>
+        <div class="title bg-primary">
+            <h3>LOGIN</h3>
+        </div>
+        <div class="col-xs-3"></div>
+        <div class="col-xs-7">
+
             <form name="loginForm" ng-submit="loginForm.$valid && formLogin.login()" autocomplete="off" novalidate>
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input name="username" ng-model="username" type="text" class="form-control" placeholder="Username" required />
-                    <span ng-show="loginForm.username.$touched && loginForm.username.$invalid">Username is Required..!</span>
+                    <span ng-show="loginForm.username.$touched && loginForm.username.$invalid" class="text-danger">Username is Required..!</span>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input name="password" ng-model="password" type="text" class="form-control" placeholder="Password" required />
-                    <span ng-show="loginForm.password.$touched && loginForm.password.$invalid">Password is Required..!</span>
+                    <span ng-show="loginForm.password.$touched && loginForm.password.$invalid" class="text-danger">Password is Required..!</span>
                 </div>
                 
                 <!-- Message -->
-                <div ng-hide="formLogin.status" class="alert alert-danger" role="alert">
+                <div ng-show="formLogin.message" class="alert alert-danger">
                   {{formLogin.message}}
                 </div>
                 
-                <button ng-hide="formLogin.status" ng-disabled="loginForm.$invalid" type="submit" class="form-control btn btn-primary" ><i class="fa fa-sign-in"></i> LOGIN</button>
-                <button ng-show="formLogin.status" type="submit" class="form-control btn btn-primary" ><i class="fa fa-sign-in"></i> ENTER</button>
+                <button ng-disabled="loginForm.$invalid" type="submit" class="form-control btn btn-primary" ><i class="fa fa-sign-in"></i> LOGIN</button>
                 
             </form>
+        </div>
         </div>
     </div>
     
